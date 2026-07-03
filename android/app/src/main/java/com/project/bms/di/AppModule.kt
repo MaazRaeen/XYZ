@@ -61,4 +61,10 @@ object AppModule {
     fun provideAuthRepository(apiService: BmsApiService, tokenManager: TokenManager): AuthRepository {
         return AuthRepositoryImpl(apiService, tokenManager)
     }
+
+    @Provides
+    @Singleton
+    fun provideBleRepository(@ApplicationContext context: Context): BleRepository {
+        return BleRepositoryImpl(context)
+    }
 }
