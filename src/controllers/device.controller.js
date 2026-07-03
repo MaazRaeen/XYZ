@@ -5,6 +5,7 @@ const BatteryCell = require('../models/BatteryCell');
 const TelemetryLog = require('../models/TelemetryLog');
 const FaultLog = require('../models/FaultLog');
 const AppError = require('../utils/appError');
+const { broadcastTelemetry } = require('../config/socket');
 
 /**
  * Helper to assert device existence and verify user ownership
@@ -237,6 +238,9 @@ const saveTelemetry = async (req, res, next) => {
     device.lastSeen = Date.now();
     device.status = 'online';
     await device.save();
+
+    // Broadcast telemetry via WebSockets in real-time
+    broadcastTelemetry(device.deviceId, log);
 
     res.status(201).json({
       success: true,

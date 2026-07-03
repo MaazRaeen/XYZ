@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const http = require('http');
 require('dotenv').config();
 
 const cookieParser = require('cookie-parser');
@@ -9,6 +10,7 @@ const connectDB = require('./config/db');
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const deviceRoutes = require('./routes/device.routes');
+const { initSocket } = require('./config/socket');
 const globalErrorHandler = require('./middleware/error.middleware');
 const AppError = require('./utils/appError');
 
@@ -48,7 +50,12 @@ app.use(globalErrorHandler);
 
 // Start listening for connections
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
+const server = http.createServer(app);
+
+// Initialize Socket.IO server
+initSocket(server);
+
+server.listen(PORT, () => {
   console.log(`BMS backend server is running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
 });
 
