@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
+const deviceRoutes = require('./routes/device.routes');
 const globalErrorHandler = require('./middleware/error.middleware');
 const AppError = require('./utils/appError');
 
@@ -34,6 +35,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1', healthRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/v1/devices', deviceRoutes);
+app.use('/api/devices', deviceRoutes);
 
 // Capture unhandled routes (404s)
 app.all('*', (req, res, next) => {
