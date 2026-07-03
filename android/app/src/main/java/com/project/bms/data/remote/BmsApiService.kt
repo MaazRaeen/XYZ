@@ -27,6 +27,9 @@ interface BmsApiService {
     @POST("devices")
     suspend fun registerDevice(@Body request: DeviceRequest): Response<Device>
 
+    @POST("auth/forgot-password")
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<MessageResponse>
+
     @POST("devices/{id}/telemetry")
     suspend fun uploadTelemetry(
         @Path("id") deviceId: String,

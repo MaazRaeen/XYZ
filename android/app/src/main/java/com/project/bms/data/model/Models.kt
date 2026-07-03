@@ -53,3 +53,12 @@ data class TelemetryRequest(
     val stateOfCharge: Double,
     val timestamp: String? = null
 )
+
+data class ForgotPasswordRequest(
+    val email: String
+)
+
+data class MessageResponse(
+    val success: Boolean,
+    val message: String
+)

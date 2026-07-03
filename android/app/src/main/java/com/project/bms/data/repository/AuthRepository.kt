@@ -9,5 +9,6 @@ interface AuthRepository {
     suspend fun login(request: LoginRequest): Result<AuthResponse>
     suspend fun register(request: RegisterRequest): Result<AuthResponse>
     val isUserLoggedIn: Flow<Boolean>
+    suspend fun forgotPassword(email: String): Result<String>
     suspend fun logout(): Result<Unit>
 }

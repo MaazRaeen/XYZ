@@ -49,6 +49,19 @@ class AuthRepositoryImpl @Inject constructor(
         !token.isNullOrBlank()
     }
 
+    override suspend fun forgotPassword(email: String): Result<String> {
+        return try {
+            val response = apiService.forgotPassword(ForgotPasswordRequest(email))
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!.message)
+            } else {
+                Result.failure(Exception(response.errorBody()?.string() ?: "Password reset request failed"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun logout(): Result<Unit> {
         return try {
             apiService.logout()
