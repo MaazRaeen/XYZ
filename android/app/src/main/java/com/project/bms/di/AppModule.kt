@@ -67,4 +67,10 @@ object AppModule {
     fun provideBleRepository(@ApplicationContext context: Context): BleRepository {
         return BleRepositoryImpl(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideBatteryRepository(apiService: BmsApiService): BatteryRepository {
+        return BatteryRepositoryImpl(apiService)
+    }
 }

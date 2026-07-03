@@ -30,6 +30,9 @@ interface BmsApiService {
     @POST("auth/forgot-password")
     suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<MessageResponse>
 
+    @GET("devices/{id}/telemetry")
+    suspend fun getTelemetryHistory(@Path("id") id: String): Response<List<TelemetryLog>>
+
     @POST("devices/{id}/telemetry")
     suspend fun uploadTelemetry(
         @Path("id") deviceId: String,

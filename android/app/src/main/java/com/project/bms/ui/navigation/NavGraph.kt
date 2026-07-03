@@ -11,10 +11,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.project.bms.ui.screens.DashboardScreen
 import com.project.bms.ui.screens.ForgotPasswordScreen
 import com.project.bms.ui.screens.LoginScreen
 import com.project.bms.ui.screens.SignupScreen
 import com.project.bms.viewmodel.AuthViewModel
+import com.project.bms.viewmodel.DashboardViewModel
 
 @Composable
 fun NavGraph(
@@ -70,15 +72,8 @@ fun NavGraph(
             )
         }
         composable(Screen.Dashboard.route) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "BMS Dashboard Screen Placeholder",
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
+            val dashboardViewModel: DashboardViewModel = hiltViewModel()
+            DashboardScreen(viewModel = dashboardViewModel)
         }
     }
 }

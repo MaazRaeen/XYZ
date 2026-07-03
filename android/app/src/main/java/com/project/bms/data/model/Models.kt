@@ -62,3 +62,14 @@ data class MessageResponse(
     val success: Boolean,
     val message: String
 )
+
+data class TelemetryLog(
+    val _id: String,
+    val deviceId: String,
+    val voltage: Double,
+    val current: Double,
+    val power: Double,
+    val temperature: Double,
+    val stateOfCharge: Double,
+    val timestamp: String
+)
