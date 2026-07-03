@@ -13,7 +13,7 @@ const faultLogSchema = new mongoose.Schema({
   },
   severity: {
     type: String,
-    enum: ['info', 'warning', 'critical'],
+    enum: ['info', 'warning', 'high', 'critical'],
     required: true
   },
   message: {

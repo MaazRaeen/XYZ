@@ -6,6 +6,7 @@ const TelemetryLog = require('../models/TelemetryLog');
 const FaultLog = require('../models/FaultLog');
 const AppError = require('../utils/appError');
 const { broadcastTelemetry } = require('../config/socket');
+const { sendPushNotification } = require('../services/notification');
 
 /**
  * Helper to assert device existence and verify user ownership
@@ -345,6 +346,23 @@ const logFault = async (req, res, next) => {
       timestamp: timestamp || Date.now(),
       resolved: false
     });
+
+    // Trigger push notification to owner on high or critical faults
+    if (severity && ['high', 'critical'].includes(severity.toLowerCase())) {
+      if (device.owner) {
+        sendPushNotification(
+          device.owner,
+          `BMS Alert: ${device.name}`,
+          `Critical safety fault logged: ${message} (${severity.toUpperCase()})`,
+          {
+            deviceId: device.deviceId,
+            faultType,
+            severity,
+            faultId: fault._id.toString()
+          }
+        );
+      }
+    }
 
     res.status(201).json({
       success: true,
